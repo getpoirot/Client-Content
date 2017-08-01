@@ -1,6 +1,7 @@
 <?php
 namespace Poirot\ContentClient\Client;
 
+use Poirot\ContentClient\Client\Command;
 use Poirot\ApiClient\aPlatform;
 use Poirot\ApiClient\Exceptions\exConnection;
 use Poirot\ApiClient\Exceptions\exHttpResponse;
@@ -23,7 +24,24 @@ class PlatformRest
 
     // Alters
 
+    /**
+     * @param Command\Post\Create $command
+     * @return Response
+     */
+    protected function _Create(Command\Post\Create $command)
+    {
+        $headers = [];
 
+        // Request With Client Credential
+        // As Authorization Header
+        $headers['Authorization'] = 'Bearer '. ( $command->getToken()->getAccessToken() );
+
+        $args = iterator_to_array($command);
+
+        $url = $this->_getServerUrlEndpoints($command);
+        $response = $this->_sendViaCurl('POST', $url, $args, $headers);
+        return $response;
+    }
 
 
     // Options

@@ -18,6 +18,9 @@
             "Poirot\\ContentClient\\": "src/"
         }
     }
+    , "suggest": {
+        "poirot/client-tenderbin": "Allow Upload Post Related Files Into Object Storage."
+    }
     ,"repositories": [
       { "type": "git" ,"url": "https://github.com/phPoirot/Client-Content.git" }
     ]

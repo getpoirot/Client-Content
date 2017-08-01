@@ -1,13 +1,17 @@
 <?php
 namespace Poirot\ContentClient;
 
+use Poirot\ContentClient\Client\Command;
 use Poirot\ApiClient\Interfaces\Token\iTokenProvider;
 use Poirot\ApiClient\aClient;
 use Poirot\ApiClient\Interfaces\iPlatform;
 use Poirot\ApiClient\Interfaces\Request\iApiCommand;
 use Poirot\ContentClient\Client\PlatformRest;
+use Poirot\ContentClient\Entity\PostContentObject;
 use Poirot\ContentClient\Exceptions\exTokenMismatch;
 
+
+//7f54e7d32ac517a0fdf3
 
 class Client
     extends aClient
@@ -27,6 +31,34 @@ class Client
     {
         $this->serverUrl  = rtrim( (string) $serverUrl, '/' );
         $this->tokenProvider = $tokenProvider;
+    }
+
+    /**
+     * Create a Post Content
+     *
+     * @param PostContentObject $content
+     *
+     * @return array
+     */
+    function create(PostContentObject $content)
+    {
+        $response = $this->call(
+            new Command\Post\Create(
+                $content->getContentType()
+                , $content->getContent()
+                , $content->getStat()
+                , $content->getShare()
+                , $content->getIsCommentEnabled()
+                , $content->getLocation()
+            )
+        );
+
+        if ( $ex = $response->hasException() )
+            throw $ex;
+
+        $r = $response->expected();
+        $r = $r->get('result');
+        return $r;
     }
 
 

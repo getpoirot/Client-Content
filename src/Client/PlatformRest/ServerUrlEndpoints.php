@@ -44,6 +44,9 @@ class ServerUrlEndpoints
 
         $cmMethod = strtolower( (string) $command );
         switch ($cmMethod) {
+            case 'create':
+                $base = '/posts';
+                break;
 
         }
 
