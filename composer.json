@@ -1,0 +1,24 @@
+{
+    "name": "poirot/client-content"
+    , "description": "Http Client Of Content Posts Module."
+    , "type"       : "library"
+    , "authors": [
+        {
+            "name": "Payam Naderi"
+            , "email": "naderi.payam@gmail.com"
+            , "role": "Developer"
+        }
+    ]
+    , "require": {
+      "poirot/api-client": "dev-master"
+      , "poirot/std": "dev-master"
+    }
+    , "autoload"  : {
+        "psr-4": {
+            "Poirot\\ContentClient\\": "src/"
+        }
+    }
+    ,"repositories": [
+      { "type": "git" ,"url": "https://github.com/phPoirot/Client-Content.git" }
+    ]
+}
