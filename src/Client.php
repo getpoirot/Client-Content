@@ -11,8 +11,6 @@ use Poirot\ContentClient\Entity\PostContentObject;
 use Poirot\ContentClient\Exceptions\exTokenMismatch;
 
 
-//7f54e7d32ac517a0fdf3
-
 class Client
     extends aClient
 {
