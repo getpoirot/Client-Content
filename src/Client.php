@@ -10,6 +10,28 @@ use Poirot\ContentClient\Client\PlatformRest;
 use Poirot\ContentClient\Entity\PostContentObject;
 use Poirot\ContentClient\Exceptions\exTokenMismatch;
 
+/*
+
+$c = new \Poirot\ContentClient\Client(
+    'http://localhost:80/'
+    , new \Poirot\ApiClient\TokenProviderSolid(
+        new \Poirot\ApiClient\AccessTokenObject([
+            'access_token' => '7f54e7d32ac517a0fdf3',
+            'client_id'    => '#clientid',
+            'expires_in'   => 3600,
+            'scopes'       => 'scope otherscope'
+        ])
+    )
+);
+
+$r = $c->create(new \Poirot\ContentClient\Entity\PostContentObject([
+    'content_type' => 'plain',
+    'content'      => [
+        'description' => 'This is content of plain content object.'
+    ],
+]));
+
+*/
 
 class Client
     extends aClient
