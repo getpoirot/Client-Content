@@ -1,6 +1,7 @@
 <?php
 namespace Poirot\ContentClient;
 
+use MongoDB\BSON\ObjectID;
 use Poirot\ContentClient\Client\Command;
 use Poirot\ApiClient\Interfaces\Token\iTokenProvider;
 use Poirot\ApiClient\aClient;
@@ -81,6 +82,26 @@ class Client
         return $r;
     }
 
+    /**
+     * Delete a Post Content
+     *
+     * @param ObjectID $id
+     *
+     * @return array
+     */
+    function delete(ObjectID $id)
+    {
+        $response = $this->call(
+            new Command\Post\Delete($id)
+        );
+
+        if ( $ex = $response->hasException() )
+            throw $ex;
+
+        $r = $response->expected();
+        $r = $r->get('result');
+        return $r;
+    }
 
     // Implement aClient
 

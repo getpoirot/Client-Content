@@ -47,6 +47,9 @@ class ServerUrlEndpoints
             case 'create':
                 $base = '/posts';
                 break;
+            case 'delete':
+                $base = '/posts/'.$command->getContentId();
+                break;
 
         }
 

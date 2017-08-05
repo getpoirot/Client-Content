@@ -43,6 +43,22 @@ class PlatformRest
         return $response;
     }
 
+    /**
+     * @param Command\Post\Delete $command
+     * @return Response
+     */
+    protected function _Delete(Command\Post\Delete $command)
+    {
+        $headers = [];
+
+        // Request With Client Credential
+        // As Authorization Header
+        $headers['Authorization'] = 'Bearer '. ( $command->getToken()->getAccessToken() );
+
+        $url = $this->_getServerUrlEndpoints($command);
+        $response = $this->_sendViaCurl('DELETE', $url, [], $headers);
+        return $response;
+    }
 
     // Options
 
