@@ -103,6 +103,128 @@ class Client
         return $r;
     }
 
+    /**
+     * Delete a Post Content
+     *
+     * @param ObjectID $id
+     *
+     * @return array
+     */
+    function retrieve(ObjectID $id)
+    {
+        $response = $this->call(
+            new Command\Post\Retrieve($id)
+        );
+
+        if ( $ex = $response->hasException() )
+            throw $ex;
+
+        $r = $response->expected();
+        $r = $r->get('result');
+        return $r;
+    }
+
+    /**
+     * Delete a Post Content
+     *
+     * @return array
+     */
+    function browse()
+    {
+        $response = $this->call(
+            new Command\Post\Browse()
+        );
+
+        if ( $ex = $response->hasException() )
+            throw $ex;
+
+        $r = $response->expected();
+        $r = $r->get('result');
+        return $r;
+    }
+
+    /**
+     * UnLike a Post
+     *
+     * @param ObjectID $id
+     * @return array
+     */
+    function unlike(ObjectID $id)
+    {
+        $response = $this->call(
+            new Command\Post\UnLike($id)
+        );
+
+        if ( $ex = $response->hasException() )
+            throw $ex;
+
+        $r = $response->expected();
+        $r = $r->get('result');
+        return $r;
+    }
+
+    /**
+     * Like a Post
+     *
+     * @param ObjectID $id
+     * @return array
+     */
+    function like(ObjectID $id)
+    {
+        $response = $this->call(
+            new Command\Post\Like($id)
+        );
+
+        if ( $ex = $response->hasException() )
+            throw $ex;
+
+        $r = $response->expected();
+        $r = $r->get('result');
+        return $r;
+    }
+
+    /**
+     * Get List of Likers of a Post
+     *
+     * @param ObjectID $id
+     * @return array
+     */
+    function getLikersOfPost(ObjectID $id)
+    {
+        $response = $this->call(
+            new Command\Post\LikersList($id)
+        );
+
+        if ( $ex = $response->hasException() )
+            throw $ex;
+
+        $r = $response->expected();
+        $r = $r->get('result');
+        return $r;
+    }
+
+    /**
+     * Get List of Likers of a Post
+     *
+     * @return array
+     */
+    function getLikesOfUser()
+    {
+        $response = $this->call(
+            new Command\Post\UserLikes()
+        );
+
+        if ( $ex = $response->hasException() )
+            throw $ex;
+
+        $r = $response->expected();
+        $r = $r->get('result');
+        return $r;
+    }
+
+
+
+
     // Implement aClient
 
     /**

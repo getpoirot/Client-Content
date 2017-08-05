@@ -60,6 +60,108 @@ class PlatformRest
         return $response;
     }
 
+    /**
+     * @param Command\Post\Retrieve $command
+     * @return Response
+     */
+    protected function _Retrieve(Command\Post\Retrieve $command)
+    {
+        $headers = [];
+
+        // Request With Client Credential
+        // As Authorization Header
+        $headers['Authorization'] = 'Bearer '. ( $command->getToken()->getAccessToken() );
+
+        $url = $this->_getServerUrlEndpoints($command);
+        $response = $this->_sendViaCurl('GET', $url, [], $headers);
+        return $response;
+    }
+
+    /**
+     * @param Command\Post\Browse $command
+     * @return Response
+     */
+    protected function _Browse(Command\Post\Browse $command)
+    {
+        $headers = [];
+
+        // Request With Client Credential
+        // As Authorization Header
+        $headers['Authorization'] = 'Bearer '. ( $command->getToken()->getAccessToken() );
+
+        $url = $this->_getServerUrlEndpoints($command);
+        $response = $this->_sendViaCurl('GET', $url, [], $headers);
+        return $response;
+    }
+
+    /**
+     * @param Command\Post\Like $command
+     * @return Response
+     */
+    protected function _Like(Command\Post\Like $command)
+    {
+        $headers = [];
+
+        // Request With Client Credential
+        // As Authorization Header
+        $headers['Authorization'] = 'Bearer '. ( $command->getToken()->getAccessToken() );
+
+        $url = $this->_getServerUrlEndpoints($command);
+        $response = $this->_sendViaCurl('POST', $url, [], $headers);
+        return $response;
+    }
+
+    /**
+     * @param Command\Post\UnLike $command
+     * @return Response
+     */
+    protected function _UnLike(Command\Post\UnLike $command)
+    {
+        $headers = [];
+
+        // Request With Client Credential
+        // As Authorization Header
+        $headers['Authorization'] = 'Bearer '. ( $command->getToken()->getAccessToken() );
+
+        $url = $this->_getServerUrlEndpoints($command);
+        $response = $this->_sendViaCurl('DELETE', $url, [], $headers);
+        return $response;
+    }
+
+
+    /**
+     * @param Command\Post\LikersList $command
+     * @return Response
+     */
+    protected function _LikersList(Command\Post\LikersList $command)
+    {
+        $headers = [];
+
+        // Request With Client Credential
+        // As Authorization Header
+        $headers['Authorization'] = 'Bearer '. ( $command->getToken()->getAccessToken() );
+
+        $url = $this->_getServerUrlEndpoints($command);
+        $response = $this->_sendViaCurl('GET', $url, [], $headers);
+        return $response;
+    }
+
+    /**
+     * @param Command\Post\UserLikes $command
+     * @return Response
+     */
+    protected function _UserLikes(Command\Post\UserLikes $command)
+    {
+        $headers = [];
+
+        // Request With Client Credential
+        // As Authorization Header
+        $headers['Authorization'] = 'Bearer '. ( $command->getToken()->getAccessToken() );
+
+        $url = $this->_getServerUrlEndpoints($command);
+        $response = $this->_sendViaCurl('GET', $url, [], $headers);
+        return $response;
+    }
     // Options
 
     /**

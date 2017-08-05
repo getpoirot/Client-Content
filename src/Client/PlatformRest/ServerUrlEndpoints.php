@@ -1,4 +1,5 @@
 <?php
+
 namespace Poirot\ContentClient\Client\PlatformRest;
 
 use Poirot\ApiClient\Interfaces\Request\iApiCommand;
@@ -18,8 +19,8 @@ class ServerUrlEndpoints
      */
     function __construct($serverBaseUrl, $command, $ssl = false)
     {
-        $this->serverBaseUrl = (string) $serverBaseUrl;
-        $this->command       = $command;
+        $this->serverBaseUrl = (string)$serverBaseUrl;
+        $this->command = $command;
     }
 
     function __toString()
@@ -42,19 +43,37 @@ class ServerUrlEndpoints
     {
         $base = null;
 
-        $cmMethod = strtolower( (string) $command );
+        $cmMethod = strtolower((string)$command);
         switch ($cmMethod) {
             case 'create':
                 $base = '/posts';
                 break;
             case 'delete':
-                $base = '/posts/'.$command->getContentId();
+                $base = '/posts/' . $command->getContentId();
+                break;
+            case 'retrieve':
+                $base = '/posts/' . $command->getContentId();
+                break;
+            case 'browse':
+                $base = '/browse';
+                break;
+            case 'like':
+                $base = '/posts/' . $command->getContentId() . '/likes';
+                break;
+            case 'unlike':
+                $base = '/posts/' . $command->getContentId() . '/likes';
+                break;
+            case 'likerslist':
+                $base = '/posts/' . $command->getContentId() . '/likes';
+                break;
+            case 'userlikes':
+                $base = '/posts/liked';
                 break;
 
         }
 
         $serverUrl = rtrim($this->serverBaseUrl, '/');
-        (! $base ) ?: $serverUrl .= '/'. trim($base, '/');
+        (!$base) ?: $serverUrl .= '/' . trim($base, '/');
         return $serverUrl;
     }
 }
