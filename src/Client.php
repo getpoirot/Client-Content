@@ -24,13 +24,6 @@ $c = new \Poirot\ContentClient\Client(
     )
 );
 
-$r = $c->create(new \Poirot\ContentClient\Entity\PostContentObject([
-    'content_type' => 'plain',
-    'content'      => [
-        'description' => 'This is content of plain content object.'
-    ],
-]));
-
 */
 
 class Client
@@ -56,6 +49,17 @@ class Client
     /**
      * Create a Post Content
      *
+     * <php>
+     * $r = $c->create(
+     *   new \Poirot\ContentClient\Entity\PostContentObject([
+     *     'content_type' => 'plain',
+     *     'content'      => [
+     *      'description' => 'This is content of plain content object.'
+     *     ],
+     *   ])
+     * );
+     * </php>
+     *
      * @param PostContentObject $content
      *
      * @return array
@@ -77,6 +81,7 @@ class Client
             throw $ex;
 
         $r = $response->expected();
+        kd($r);
         $r = $r->get('result');
         return $r;
     }
