@@ -1,4 +1,5 @@
 <?php
+
 namespace Poirot\ContentClient\Client;
 
 use Poirot\ContentClient\Client\Command;
@@ -18,7 +19,7 @@ class PlatformRest
     protected $Command;
 
     // Options:
-    protected $usingSsl  = false;
+    protected $usingSsl = false;
     protected $serverUrl = null;
 
 
@@ -34,7 +35,7 @@ class PlatformRest
 
         // Request With Client Credential
         // As Authorization Header
-        $headers['Authorization'] = 'Bearer '. ( $command->getToken()->getAccessToken() );
+        $headers['Authorization'] = 'Bearer ' . ($command->getToken()->getAccessToken());
 
         $args = iterator_to_array($command);
 
@@ -53,7 +54,7 @@ class PlatformRest
 
         // Request With Client Credential
         // As Authorization Header
-        $headers['Authorization'] = 'Bearer '. ( $command->getToken()->getAccessToken() );
+        $headers['Authorization'] = 'Bearer ' . ($command->getToken()->getAccessToken());
 
         $url = $this->_getServerUrlEndpoints($command);
         $response = $this->_sendViaCurl('DELETE', $url, [], $headers);
@@ -70,7 +71,7 @@ class PlatformRest
 
         // Request With Client Credential
         // As Authorization Header
-        $headers['Authorization'] = 'Bearer '. ( $command->getToken()->getAccessToken() );
+        $headers['Authorization'] = 'Bearer ' . ($command->getToken()->getAccessToken());
 
         $url = $this->_getServerUrlEndpoints($command);
         $response = $this->_sendViaCurl('GET', $url, [], $headers);
@@ -87,7 +88,7 @@ class PlatformRest
 
         // Request With Client Credential
         // As Authorization Header
-        $headers['Authorization'] = 'Bearer '. ( $command->getToken()->getAccessToken() );
+        $headers['Authorization'] = 'Bearer ' . ($command->getToken()->getAccessToken());
 
         $url = $this->_getServerUrlEndpoints($command);
         $response = $this->_sendViaCurl('GET', $url, [], $headers);
@@ -104,7 +105,7 @@ class PlatformRest
 
         // Request With Client Credential
         // As Authorization Header
-        $headers['Authorization'] = 'Bearer '. ( $command->getToken()->getAccessToken() );
+        $headers['Authorization'] = 'Bearer ' . ($command->getToken()->getAccessToken());
 
         $url = $this->_getServerUrlEndpoints($command);
         $response = $this->_sendViaCurl('POST', $url, [], $headers);
@@ -121,7 +122,7 @@ class PlatformRest
 
         // Request With Client Credential
         // As Authorization Header
-        $headers['Authorization'] = 'Bearer '. ( $command->getToken()->getAccessToken() );
+        $headers['Authorization'] = 'Bearer ' . ($command->getToken()->getAccessToken());
 
         $url = $this->_getServerUrlEndpoints($command);
         $response = $this->_sendViaCurl('DELETE', $url, [], $headers);
@@ -139,7 +140,7 @@ class PlatformRest
 
         // Request With Client Credential
         // As Authorization Header
-        $headers['Authorization'] = 'Bearer '. ( $command->getToken()->getAccessToken() );
+        $headers['Authorization'] = 'Bearer ' . ($command->getToken()->getAccessToken());
 
         $url = $this->_getServerUrlEndpoints($command);
         $response = $this->_sendViaCurl('GET', $url, [], $headers);
@@ -156,12 +157,67 @@ class PlatformRest
 
         // Request With Client Credential
         // As Authorization Header
-        $headers['Authorization'] = 'Bearer '. ( $command->getToken()->getAccessToken() );
+        $headers['Authorization'] = 'Bearer ' . ($command->getToken()->getAccessToken());
 
         $url = $this->_getServerUrlEndpoints($command);
         $response = $this->_sendViaCurl('GET', $url, [], $headers);
         return $response;
     }
+
+    /**
+     * @param Command\Comment\SendComment $command
+     * @return Response
+     */
+    protected function _SendComment(Command\Comment\SendComment $command)
+    {
+        $headers = [];
+
+        // Request With Client Credential
+        // As Authorization Header
+        $headers['Authorization'] = 'Bearer ' . ($command->getToken()->getAccessToken());
+        $args = [
+            'comment' => $command->getContent()
+        ];
+        $url = $this->_getServerUrlEndpoints($command);
+        $response = $this->_sendViaCurl('POST', $url, $args, $headers);
+        return $response;
+    }
+
+
+    /**
+     * @param Command\Comment\DeleteComment $command
+     * @return Response
+     */
+    protected function _DeleteComment(Command\Comment\DeleteComment $command)
+    {
+        $headers = [];
+
+        // Request With Client Credential
+        // As Authorization Header
+        $headers['Authorization'] = 'Bearer ' . ($command->getToken()->getAccessToken());
+        $args = [];
+        $url = $this->_getServerUrlEndpoints($command);
+        $response = $this->_sendViaCurl('DELETE', $url, $args, $headers);
+        return $response;
+    }
+
+    /**
+     * @param Command\Comment\Comments $command
+     * @return Response
+     */
+    protected function _Comments(Command\Comment\Comments $command)
+    {
+        $headers = [];
+
+        // Request With Client Credential
+        // As Authorization Header
+        $headers['Authorization'] = 'Bearer ' . ($command->getToken()->getAccessToken());
+        $args = [];
+        $url = $this->_getServerUrlEndpoints($command);
+        $response = $this->_sendViaCurl('GET', $url, $args, $headers);
+        return $response;
+    }
+
     // Options
 
     /**
@@ -173,7 +229,7 @@ class PlatformRest
      */
     function setServerUrl($url)
     {
-        $this->serverUrl = (string) $url;
+        $this->serverUrl = (string)$url;
         return $this;
     }
 
@@ -196,7 +252,7 @@ class PlatformRest
      */
     function setUsingSsl($flag = true)
     {
-        $this->usingSsl = (bool) $flag;
+        $this->usingSsl = (bool)$flag;
         return $this;
     }
 
@@ -215,7 +271,7 @@ class PlatformRest
 
     protected function _sendViaCurl($method, $url, array $data, array $headers = [])
     {
-        if (! extension_loaded('curl') )
+        if (!extension_loaded('curl'))
             throw new \Exception('cURL library is not loaded');
 
 
@@ -223,7 +279,7 @@ class PlatformRest
 
         $h = [];
         foreach ($headers as $key => $val)
-            $h[] = $key.': '.$val;
+            $h[] = $key . ': ' . $val;
         $headers = $h;
 
 
@@ -246,7 +302,7 @@ class PlatformRest
                 // meta => ['name' => (string)] ---> meta['name'] = (string)
                 if (is_array($d)) {
                     foreach ($d as $i => $v)
-                        $data[$k.'['.$i.']'] = $v;
+                        $data[$k . '[' . $i . ']'] = $v;
 
                     unset($data[$k]);
                 }
@@ -273,9 +329,9 @@ class PlatformRest
 
 
         # Send Post Request
-        $cResponse     = curl_exec($handle);
+        $cResponse = curl_exec($handle);
         $cResponseCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-        $cContentType  = curl_getinfo($handle, CURLINFO_CONTENT_TYPE);
+        $cContentType = curl_getinfo($handle, CURLINFO_CONTENT_TYPE);
 
         if ($curl_errno = curl_errno($handle)) {
             // Connection Error
@@ -284,7 +340,7 @@ class PlatformRest
         }
 
         $exception = null;
-        if (! ($cResponseCode >= 200 && $cResponseCode < 300) ) {
+        if (!($cResponseCode >= 200 && $cResponseCode < 300)) {
             $message = $cResponse;
             if ($cResponseCode >= 300 && $cResponseCode < 400)
                 $message = 'Response Redirected To Another Uri.';
@@ -310,6 +366,6 @@ class PlatformRest
             , $this->isUsingSsl()
         );
 
-        return (string) $url;
+        return (string)$url;
     }
 }

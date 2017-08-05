@@ -69,7 +69,15 @@ class ServerUrlEndpoints
             case 'userlikes':
                 $base = '/posts/liked';
                 break;
-
+            case 'sendcomment':
+                $base = '/posts/' . $command->getContentId() . '/comments';
+                break;
+            case 'deletecomment':
+                $base = '/posts/' . $command->getContentId() . '/comments/' . $command->getCommentId();
+                break;
+            case 'comments':
+                $base = '/posts/' . $command->getContentId() . '/comments';
+                break;
         }
 
         $serverUrl = rtrim($this->serverBaseUrl, '/');

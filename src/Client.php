@@ -1,4 +1,5 @@
 <?php
+
 namespace Poirot\ContentClient;
 
 use MongoDB\BSON\ObjectID;
@@ -45,12 +46,12 @@ class Client
     /**
      * Content Client constructor.
      *
-     * @param string         $serverUrl
+     * @param string $serverUrl
      * @param iTokenProvider $tokenProvider
      */
     function __construct($serverUrl, iTokenProvider $tokenProvider)
     {
-        $this->serverUrl  = rtrim( (string) $serverUrl, '/' );
+        $this->serverUrl = rtrim((string)$serverUrl, '/');
         $this->tokenProvider = $tokenProvider;
     }
 
@@ -74,7 +75,7 @@ class Client
             )
         );
 
-        if ( $ex = $response->hasException() )
+        if ($ex = $response->hasException())
             throw $ex;
 
         $r = $response->expected();
@@ -95,7 +96,7 @@ class Client
             new Command\Post\Delete($id)
         );
 
-        if ( $ex = $response->hasException() )
+        if ($ex = $response->hasException())
             throw $ex;
 
         $r = $response->expected();
@@ -116,7 +117,7 @@ class Client
             new Command\Post\Retrieve($id)
         );
 
-        if ( $ex = $response->hasException() )
+        if ($ex = $response->hasException())
             throw $ex;
 
         $r = $response->expected();
@@ -135,7 +136,7 @@ class Client
             new Command\Post\Browse()
         );
 
-        if ( $ex = $response->hasException() )
+        if ($ex = $response->hasException())
             throw $ex;
 
         $r = $response->expected();
@@ -155,7 +156,7 @@ class Client
             new Command\Post\UnLike($id)
         );
 
-        if ( $ex = $response->hasException() )
+        if ($ex = $response->hasException())
             throw $ex;
 
         $r = $response->expected();
@@ -175,7 +176,7 @@ class Client
             new Command\Post\Like($id)
         );
 
-        if ( $ex = $response->hasException() )
+        if ($ex = $response->hasException())
             throw $ex;
 
         $r = $response->expected();
@@ -195,7 +196,7 @@ class Client
             new Command\Post\LikersList($id)
         );
 
-        if ( $ex = $response->hasException() )
+        if ($ex = $response->hasException())
             throw $ex;
 
         $r = $response->expected();
@@ -204,7 +205,7 @@ class Client
     }
 
     /**
-     * Get List of Likers of a Post
+     * Get List of  Likes of User
      *
      * @return array
      */
@@ -214,7 +215,69 @@ class Client
             new Command\Post\UserLikes()
         );
 
-        if ( $ex = $response->hasException() )
+        if ($ex = $response->hasException())
+            throw $ex;
+
+        $r = $response->expected();
+        $r = $r->get('result');
+        return $r;
+    }
+
+    /**
+     * Send Comment for a Post
+     *
+     * @param $content
+     * @param ObjectID $contentId
+     * @return array
+     */
+    function sendComment($content, ObjectID $contentId)
+    {
+        $response = $this->call(
+            new Command\Comment\SendComment($content, $contentId)
+        );
+
+        if ($ex = $response->hasException())
+            throw $ex;
+
+        $r = $response->expected();
+        $r = $r->get('result');
+        return $r;
+    }
+
+    /**
+     * Send Comment for a Post
+     *
+     * @param ObjectID $contentId
+     * @param ObjectID $commentId
+     * @return array
+     */
+    function deleteComment(ObjectID $contentId, ObjectID $commentId)
+    {
+        $response = $this->call(
+            new Command\Comment\DeleteComment($contentId, $commentId)
+        );
+
+        if ($ex = $response->hasException())
+            throw $ex;
+
+        $r = $response->expected();
+        $r = $r->get('result');
+        return $r;
+    }
+
+    /**
+     * Send Comment for a Post
+     *
+     * @param ObjectID $contentId
+     * @return array
+     */
+    function comments(ObjectID $contentId)
+    {
+        $response = $this->call(
+            new Command\Comment\Comments($contentId)
+        );
+
+        if ($ex = $response->hasException())
             throw $ex;
 
         $r = $response->expected();
@@ -237,12 +300,12 @@ class Client
      */
     protected function platform()
     {
-        if (! $this->platform )
+        if (!$this->platform)
             $this->platform = new PlatformRest;
 
 
         # Default Options Overriding
-        $this->platform->setServerUrl( $this->serverUrl );
+        $this->platform->setServerUrl($this->serverUrl);
 
         return $this->platform;
     }
@@ -271,7 +334,7 @@ class Client
 
         if ($ex = $response->hasException()) {
 
-            if ( $ex instanceof exTokenMismatch && $recall > 0 ) {
+            if ($ex instanceof exTokenMismatch && $recall > 0) {
                 // Token revoked or mismatch
                 // Refresh Token
                 $this->tokenProvider->exchangeToken();
