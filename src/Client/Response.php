@@ -4,6 +4,7 @@ namespace Poirot\ContentClient\Client;
 use Poirot\ApiClient\Exceptions\exHttpResponse;
 use Poirot\ApiClient\Response\ExpectedJson;
 use Poirot\ApiClient\ResponseOfClient;
+use Poirot\ContentClient\Exceptions\exResourceNotFound;
 use Poirot\ContentClient\Exceptions\exTokenMismatch;
 use Poirot\ContentClient\Exceptions\exUnexpectedValue;
 use Poirot\ContentClient\Exceptions\exUnknownContentType;
@@ -32,6 +33,9 @@ class Response
                         break;
                     case 'exUnknownContentType':
                         $this->exception = new exUnknownContentType($err['message'], (int) $err['code']);
+                        break;
+                    case 'exResourceNotFound':
+                        $this->exception = new exResourceNotFound($err['message'], (int) $err['code']);
                         break;
                 }
             }
