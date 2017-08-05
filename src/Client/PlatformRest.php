@@ -9,6 +9,7 @@ use Poirot\ApiClient\Exceptions\exHttpResponse;
 use Poirot\ApiClient\Interfaces\iPlatform;
 use Poirot\ApiClient\Interfaces\Request\iApiCommand;
 use Poirot\ContentClient\Client\PlatformRest\ServerUrlEndpoints;
+use Poirot\Std\Type\StdArray;
 
 
 class PlatformRest
@@ -298,38 +299,8 @@ class PlatformRest
             curl_setopt($handle, CURLOPT_POST, true);
 
             # build request body
-            $_f_build = function($data) use (&$_f_build) {
-                $args     = func_get_args();
-                $isNested = @$args[1];
-
-                foreach ($data as $k => $d) {
-                    // Build PHP Array Request Params Compatible With Curl
-                    // meta => ['name' => (string)] ---> meta['name'] = (string)
-                    if (is_array($d)) {
-                        foreach ($d as $i => $v) {
-                            if (is_array($v)) {
-                                // Nested Array
-                                foreach ($d = $_f_build($v, true) as $kn => $kv)
-                                    $data[$k . '[' . $i . ']' . $kn] = $kv;
-
-                            } else {
-                                if ($isNested)
-                                    $data['[' . $k . ']' . '[' . $i . ']'] = $v;
-                                else
-                                    $data[$k . '[' . $i . ']'] = $v;
-                            }
-                        }
-
-                        unset($data[$k]);
-                    }
-                }
-
-                return $data;
-            };
-
-            $data = $_f_build($data);
-
-            curl_setopt($handle, CURLOPT_POSTFIELDS, $data);
+            $data = StdArray::of($data)->makeFlattenFace();
+            curl_setopt($handle, CURLOPT_POSTFIELDS, $data->value);
 
         } else {
             $urlEncodeData = http_build_query($data);
