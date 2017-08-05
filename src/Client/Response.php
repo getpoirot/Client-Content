@@ -6,6 +6,7 @@ use Poirot\ApiClient\Response\ExpectedJson;
 use Poirot\ApiClient\ResponseOfClient;
 use Poirot\ContentClient\Exceptions\exTokenMismatch;
 use Poirot\ContentClient\Exceptions\exUnexpectedValue;
+use Poirot\ContentClient\Exceptions\exUnknownContentType;
 
 
 class Response
@@ -29,10 +30,12 @@ class Response
                     case 'exUnexpectedValue':
                         $this->exception = new exUnexpectedValue($err['message'], (int) $err['code']);
                         break;
+                    case 'exUnknownContentType':
+                        $this->exception = new exUnknownContentType($err['message'], (int) $err['code']);
+                        break;
                 }
             }
         }
-
 
         return $this->exception;
     }

@@ -2,9 +2,9 @@
 namespace Poirot\ContentClient\Exceptions;
 
 
-class exUnexpectedValue
+class exUnknownContentType
     extends \RuntimeException
     implements iExceptionOfContentClient
 {
-    protected $code = 400;
+
 }
