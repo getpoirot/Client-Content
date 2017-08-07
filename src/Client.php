@@ -11,6 +11,7 @@ use Poirot\ApiClient\Interfaces\Request\iApiCommand;
 use Poirot\ContentClient\Client\PlatformRest;
 use Poirot\ContentClient\Entity\PostContentObject;
 use Poirot\ContentClient\Exceptions\exTokenMismatch;
+use Poirot\Std\Interfaces\Struct\iDataEntity;
 
 /*
 
@@ -83,7 +84,7 @@ class Client
             throw $ex;
 
         $r = $response->expected();
-        $r = $r->get('result');
+        $r = ($r instanceof iDataEntity) ? $r->get('result') : $r;
         return $r;
     }
 
@@ -104,7 +105,7 @@ class Client
             throw $ex;
 
         $r = $response->expected();
-        $r = $r->get('result');
+        $r = ($r instanceof iDataEntity) ? $r->get('result') : $r;
         return $r;
     }
 
@@ -125,7 +126,7 @@ class Client
             throw $ex;
 
         $r = $response->expected();
-        $r = $r->get('result');
+        $r = ($r instanceof iDataEntity) ? $r->get('result') : $r;
         return $r;
     }
 
@@ -144,7 +145,7 @@ class Client
             throw $ex;
 
         $r = $response->expected();
-        $r = $r->get('result');
+        $r = ($r instanceof iDataEntity) ? $r->get('result') : $r;
         return $r;
     }
 
@@ -164,7 +165,7 @@ class Client
             throw $ex;
 
         $r = $response->expected();
-        $r = $r->get('result');
+        $r = ($r instanceof iDataEntity) ? $r->get('result') : $r;
         return $r;
     }
 
@@ -184,8 +185,7 @@ class Client
             throw $ex;
 
         $r = $response->expected();
-        kd($r);
-        $r = $r->get('result');
+        $r = ($r instanceof iDataEntity) ? $r->get('result') : $r;
         return $r;
     }
 
@@ -205,7 +205,7 @@ class Client
             throw $ex;
 
         $r = $response->expected();
-        $r = $r->get('result');
+        $r = ($r instanceof iDataEntity) ? $r->get('result') : $r;
         return $r;
     }
 
@@ -224,7 +224,7 @@ class Client
             throw $ex;
 
         $r = $response->expected();
-        $r = $r->get('result');
+        $r = ($r instanceof iDataEntity) ? $r->get('result') : $r;
         return $r;
     }
 
@@ -245,7 +245,7 @@ class Client
             throw $ex;
 
         $r = $response->expected();
-        $r = $r->get('result');
+        $r = ($r instanceof iDataEntity) ? $r->get('result') : $r;
         return $r;
     }
 
@@ -266,7 +266,7 @@ class Client
             throw $ex;
 
         $r = $response->expected();
-        $r = $r->get('result');
+        $r = ($r instanceof iDataEntity) ? $r->get('result') : $r;
         return $r;
     }
 
@@ -286,7 +286,7 @@ class Client
             throw $ex;
 
         $r = $response->expected();
-        $r = $r->get('result');
+        $r = ($r instanceof iDataEntity) ? $r->get('result') : $r;
         return $r;
     }
 

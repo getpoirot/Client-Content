@@ -6,8 +6,7 @@ Http Client For Content Posts Module.
 ```php
 # Upload File To O-Storage
 #
-$uploadedFile = \Apanaj\IOC::ClientTenderBin()
-    ->store(
+$uploadedFile = $ClientTenderBin->store(
         fopen(__DIR__.'/files/infinie.jpeg', 'r')
         , null
         , 'Infinite'
@@ -17,8 +16,7 @@ $uploadedFile = \Apanaj\IOC::ClientTenderBin()
 
 # Insert New Post
 #
-$r = \Apanaj\IOC::ClientContent()
-    ->create(new PostContentObject([
+$r = $ClientContent->create(new PostContentObject([
         'content_type' => 'general',
         'content'      => [
             "description" => "any text content #with_hash_tag or @mention that will extracted.",
